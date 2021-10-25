@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 /**
  * @author ziyuan
  * @Description
@@ -15,21 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class testController {
+
     Logger logger = LoggerFactory.getLogger(testController.class);
-    @DubboReference(version = "1.0.0",
-    url = "dubbo://localhost:20880")
+
+//    api模块中定义UserService
+//    远程调用，相当于Spring Boot 中自动注入一个实现类
+    @DubboReference(version = "1.0.0")
     private UserService userService;
 
+//    测试服务功能
     @GetMapping("/dubboTest/{msg}")
     public String method1(@PathVariable("msg") String msg) {
-       return userService.login("controller give you a " + msg);
+
+        return userService.login( msg);
     }
 
-    @GetMapping("/test")
-    public String methodTest() {
-        logger.error("done!!");
-        return "success!!!";
-    }
 }
 
 

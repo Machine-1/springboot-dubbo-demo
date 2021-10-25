@@ -16,7 +16,9 @@
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
 
+    <!-- 指明子模块  -->
     <modules>
+        <module>user</module>
         <module>controller</module>
         <module>api</module>
     </modules>
@@ -48,55 +50,43 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- MyBatis -->
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis.spring.boot</groupId>-->
-<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--            <version>2.2.0</version>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; Mysql &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>mysql</groupId>-->
-<!--            <artifactId>mysql-connector-java</artifactId>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
-
         <!-- Dubbo -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
             <version>3.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- .curator/zookeeper 客户端-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.curator</groupId>-->
-<!--            <artifactId>curator-recipes</artifactId>-->
-<!--            <version>5.1.0</version>-->
-<!--        </dependency>-->
-
-
-
-        <!-- api -->
+        <!-- api模块 -->
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <!-- AOP -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-aop</artifactId>-->
-<!--        </dependency>-->
+        <!-- 引入zookeeper curator客户端-->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-x-discovery</artifactId>
+            <version>5.2.0</version>
+        </dependency>
 
-<!--        &lt;!&ndash; guava &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.google.guava</groupId>-->
-<!--            <artifactId>guava</artifactId>-->
-<!--            <version>23.3-jre</version>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>
