@@ -195,13 +195,13 @@ public class testController {
 }
 ```
 经过测试，可以完美运行，现在开始整合 Zookeeper  
-由于不想在 Linux中 配置 Zookeeper，所以我们直接使用 Zookeeper 的 Docker 镜像
+由于不想在 Linux中 配置 Zookeeper，所以我们直接使用 Zookeeper 的 Docker 镜像  
 [Zookeeper官方镜像](https://hub.docker.com/_/zookeeper)  
 执行命令：
 `docker pull zookeeper`  
 下载完成，查看一下  
 `docker images`  
-运行
+运行  
 `docker run --name zookeeper -p 2181:2181 --restart always -d zookeeper`
 
 
