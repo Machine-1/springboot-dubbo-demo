@@ -1,9 +1,8 @@
-## Spring Boot + Dubbo + Zookeeper 简单上手
+## DubboDemo 简单上手
 
-#### 简介
-
-搭建聚合性工程
-
+### 简介
+这个是我学习SpringBoot整合Dubbo和Zookeeper快速上手案例，项目有点粗糙，还在不断改进  
+SpringBoot的两个服务和Dubbo都在本机（Win）运行，Zookeeper 部署在Linux服务器的Docker容器中  
 * 父工程：dubbo_test
   * api：接口定义
   * controller：相当于消费者角色
@@ -11,7 +10,12 @@
 
 大致流程就是在`api`模块中定义好接口，打成`jar`包交给父工程用作依赖，子模块`controller` `user`跟着父模块也继承了`api`模块，然后一个用来实现服务类，另一个用来调用服务类
 
-#### 工程构建
+### 要求
+Maven环境，Linux中要有Docker环境
+
+### 开始
+
+#### 搭建聚合性工程
 
 父类工程使用 SpringBoot 创建，只保留`pom.xml`文件，其三个子模块也分别使用 SpringBoot 创建
 
@@ -50,7 +54,7 @@
 父工程添加依赖（包括子模块`api`），这里暂时没用上`zookeeper`，所以不添加
 
 ```xml
- <dependencies>
+  <dependencies>
        <!-- springboot 常规依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -73,16 +77,22 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-     
-     
-        <!-- Dubbo ！！！ 这里直接用了最新版，旧版好多坑-->
+        
+        <!-- Dubbo -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
             <version>3.0.3</version>
+         <!-- 排除 log4j 依赖 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-     
-        <!-- api ！！！-->
+
+        <!-- api模块 -->
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>api</artifactId>
@@ -184,7 +194,15 @@ public class testController {
 
 }
 ```
-
+经过测试，可以完美运行，现在开始整合 Zookeeper  
+由于不想在 Linux中 配置 Zookeeper，所以我们直接使用 Zookeeper 的 Docker 镜像
+[Zookeeper官方镜像](https://hub.docker.com/_/zookeeper)  
+执行命令：
+`docker pull zookeeper`  
+下载完成，查看一下  
+`docker images`  
+运行
+`docker run --name zookeeper -p 2181:2181 --restart always -d zookeeper`
 
 
 
